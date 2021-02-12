@@ -19,6 +19,13 @@ stemmer = PorterStemmer()
 def lemmatize(word):
     return stemmer.stem(word, 0, len(word) - 1)
 
+def create_db_tables():
+    conn = conn_to_db('pdf.db')
+    cursor = conn.execute("CREATE TABLE PDF (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, HASH TEXT NOT NULL, DATE INT NOT NULL)")
+    cursor = conn.execute("CREATE TABLE FREQ (ID INTEGER PRIMARY KEY AUTOINCREMENT, PDF_ID INT NOT NULL, WORD TEXT NOT NULL, W_FREQ REAL NOT NULL)")
+    conn.close()
+    return True
+
 def conn_to_db(db_name):
     conn = sqlite3.connect(app.config['DB_PATH'] + db_name)
     conn.create_function('LOG', 1, math.log)

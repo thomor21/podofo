@@ -103,3 +103,6 @@ def return_pdf(pdf_name):
         abort(404)
 
 
+@app.route('/createtables')
+def create_tables():
+    return create_db_tables()
